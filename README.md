@@ -1,2 +1,1 @@
-# quantization_intro
-Introduction into Quantization
+# Introduction to Quantization
