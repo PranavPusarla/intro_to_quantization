@@ -15,6 +15,8 @@ The error 0.54 - 0.5372 = 0.0028 is the difference we call quantization error si
 
 In this method, you would first train a model in FP32 (32-bit floating point). Therefore, all the weights and biases would be of this precision. After training, we convert the weights/biases to the lower precision (Ex. INT8, INT4). This works well if the model isn't very sensitive to precision loss. It allows you to reduce the memory of storage and is less expensive to run inference (forward pass).
 
+![Quantization PTQ](quantization_ptq.png)
+
 ### Quantization-Aware Training (QAT)
 
 The goal of this method is to create models that can still produce accurate results with quantized weights. During training of the model, we would simulate the quantization effects on the forward pass. This means we would quantize the weight when multiplying it to the input (Weight Quantization) and then quantize the output as well when sending it to the next layer (Activation Quantization). However, when we backpropagate, we still use the high precision so that the model is able to learn effectively. This method is particularly effective when you want to use less memory/compute (such as on mobile devices) but don't want to sacrifice precision.
