@@ -23,7 +23,13 @@ The goal of this method is to create models that can still produce accurate resu
 
 #### Does this "simulated" quantization affect backpropagation?
 
-If you have a background in machine learning, you'll easily see that we have a problem when doing backpropagation. 
+If you have a background in machine learning, you'll easily see that we have a problem when doing backpropagation. When calculating forward pass, we are quantizing the weights and outputs through a function that looks like this
+
+$$\hat{w} = round(\frac{w}{s_w}) * s_w$$
+$$z = \hat{w}*x + \hat{b}$$
+$$\hat{z} = round(\frac{z}{s_a}) * s_a$$
+
+As we take the derivative with respect to the various parameters (gradient), we end up taking the derivative of the rounding function which is 0. This causes the gradient to disappear and we are unable to train our model correctly. Therefore, when we back-propagate, we will treat the rounding function as the identity function so that the derivative is 1 and it has no effect on the gradient being calculated.
 
 ### Why is Quantization Hard in LLMs?
 
